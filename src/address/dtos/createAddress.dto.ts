@@ -12,5 +12,5 @@ export class CreateAddressDto {
   cep: string;
 
   @IsInt()
-  cityId: string;
+  cityId: number;
 }
