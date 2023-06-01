@@ -1,11 +1,13 @@
-import { CityEntity } from 'src/city/entities/city.entity';
-import { UserEntity } from 'src/user/entities/user.entity';
+import { CityEntity } from '../../city/entities/city.entity';
+import { UserEntity } from '../../user/entities/user.entity';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity({ name: 'address' })
@@ -27,6 +29,12 @@ export class AddressEntity {
 
   @Column({ name: 'city_id', nullable: false })
   cityId: number;
+
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 
   @ManyToOne(() => UserEntity, (user) => user.addresses)
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })

@@ -5,7 +5,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { ReturnUserDto } from 'src/user/dtos/returnUser.dto';
+import { ReturnUserDto } from '../user/dtos/returnUser.dto';
 import { loginDto } from './dtos/login.dto';
 import { AuthService } from './auth.service';
 import { ReturnLogin } from './dtos/returnLogin.dto';
