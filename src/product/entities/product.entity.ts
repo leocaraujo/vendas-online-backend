@@ -17,11 +17,14 @@ export class ProductEntity {
   @Column({ name: 'name', nullable: false })
   name: string;
 
-  @Column({ name: 'price', nullable: false })
+  @Column({ name: 'price', type: 'decimal', nullable: true })
   price: number;
 
   @Column({ name: 'image', nullable: false })
-  categoryId: string;
+  image: string;
+
+  @Column({ name: 'categoryId', nullable: false })
+  categoryId: number;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

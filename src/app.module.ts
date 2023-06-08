@@ -29,6 +29,7 @@ import { ProductModule } from './product/product.module';
       entities: [`${__dirname}/**/*.entity{.ts,.js}`],
       migrations: [`${__dirname}/migration/{.ts,*.js}`],
       migrationsRun: true,
+      synchronize: true,
     }),
     StateModule,
     CityModule,

@@ -21,13 +21,17 @@ export class CategoryService {
     return category;
   }
 
-  // async findCategoryById(id: number): Promise<CategoryEntity> {
-  //   const category = await this.categoryRepository.findOne(id);
-  //   if (!category) {
-  //     throw new NotFoundException(`Category with id ${id} not found`);
-  //   }
-  //   return category;
-  // }
+  async findCategoryById(categoryId: number): Promise<CategoryEntity> {
+    const category = await this.categoryRepository.findOne({
+      where: {
+        id: categoryId,
+      },
+    });
+    if (!category) {
+      throw new NotFoundException(`Category with id ${categoryId} not found`);
+    }
+    return category;
+  }
 
   async findAllCategories() {
     const categories = await this.categoryRepository.find();
