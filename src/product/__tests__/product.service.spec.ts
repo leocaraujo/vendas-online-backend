@@ -6,7 +6,9 @@ import { Repository } from 'typeorm';
 import { productMock } from '../__mocks__/product.mock';
 import { createProductMock } from '../__mocks__/create-product.mock';
 import { CategoryService } from '../../category/category.service';
-import e from 'express';
+import { returnDeleteMock } from '../../__mocks__/return-delete.mock';
+import { updateProductMock } from '../__mocks__/update-product.mock';
+import exp from 'constants';
 
 describe('ProductService', () => {
   let service: ProductService;
@@ -22,7 +24,9 @@ describe('ProductService', () => {
           provide: getRepositoryToken(ProductEntity),
           useValue: {
             find: jest.fn().mockResolvedValue([productMock]),
+            findOne: jest.fn().mockResolvedValue(productMock),
             save: jest.fn().mockResolvedValue(productMock),
+            delete: jest.fn().mockResolvedValue(returnDeleteMock),
           },
         },
         {
@@ -74,5 +78,37 @@ describe('ProductService', () => {
       .mockRejectedValue(new Error());
 
     expect(service.createProduct(createProductMock)).rejects.toThrowError();
+  });
+
+  it('should product in find by id', async () => {
+    const product = await service.findProductById(productMock.id);
+
+    expect(product).toEqual(productMock);
+  });
+
+  it('should return error in product not found', async () => {
+    jest.spyOn(productRepository, 'findOne').mockResolvedValue(undefined);
+
+    expect(service.findProductById(productMock.id)).rejects.toThrowError();
+  });
+
+  it('should deleted true Product', async () => {
+    const deleted = await service.deleteProduct(productMock.id);
+    expect(deleted).toEqual(returnDeleteMock);
+  });
+
+  it('should return product after updated', async () => {
+    const product = await service.updateProduct(
+      createProductMock,
+      productMock.id,
+    );
+    expect(product).toEqual(productMock);
+  });
+
+  it('should return error in update product', async () => {
+    jest.spyOn(productRepository, 'save').mockRejectedValue(new Error());
+    expect(
+      service.updateProduct(createProductMock, productMock.id),
+    ).rejects.toThrowError();
   });
 });
